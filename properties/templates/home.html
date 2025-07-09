@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Amritsar Property Hub | Buy, Rent, Sell Property in Amritsar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Amritsar Property Hub - Buy, Rent or Sell Residential & Commercial Properties in Amritsar. Contact us today!">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="icon" href="{% static 'images/logo.jpg' %}">
+</head>
+<body>
+
+<!-- 🔹 NAVIGATION -->
+<nav class="navbar">
+  <div class="nav-left">
+    <img src="{% static 'images/logo.jpg' %}" class="logo-img" alt="Logo">
+    <span class="logo-text">Amritsar Property Hub</span>
+  </div>
+  <div class="nav-links">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'contact' %}">Contact</a>
+  </div>
+</nav>
+
+<!-- 🔹 HERO SECTION -->
+<section class="hero-banner">
+  <div class="hero-content">
+    <h1>Find Your Dream Property in Amritsar</h1>
+    <p>Buy, Rent & Sell Residential & Commercial Properties</p>
+    <div class="hero-buttons">
+      <a href="https://wa.me/917814048665?text={{ 'Hello, I want to buy a property.'|urlencode }}" class="btn-primary" target="_blank">Buy</a>
+      <a href="https://wa.me/917814048665?text={{ 'Hello, I want to rent a property.'|urlencode }}" class="btn-primary" target="_blank">Rent</a>
+      <a href="https://wa.me/917814048665?text={{ 'Hello, I would like to sell my property.'|urlencode }}" class="btn-primary" target="_blank">Sell</a>
+    </div>
+  </div>
+</section>
+
+<!-- 🔍 SEARCH FORM -->
+<form method="get" class="search-form">
+  <input type="text" name="query" placeholder="Search by title or location" value="{{ query }}">
+  <input type="number" name="min_price" placeholder="Min ₹" value="{{ min_price }}">
+  <input type="number" name="max_price" placeholder="Max ₹" value="{{ max_price }}">
+  <select name="property_type">
+    <option value="">All Types</option>
+    <option value="flat" {% if selected_type == 'flat' %}selected{% endif %}>Flat</option>
+    <option value="plot" {% if selected_type == 'plot' %}selected{% endif %}>Plot</option>
+    <option value="shop" {% if selected_type == 'shop' %}selected{% endif %}>Shop</option>
+    <option value="house" {% if selected_type == 'house' %}selected{% endif %}>House</option>
+    <option value="kothi" {% if selected_type == 'kothi' %}selected{% endif %}>Kothi</option>
+    <option value="hotel" {% if selected_type == 'hotel' %}selected{% endif %}>Hotel</option>
+  </select>
+  {% if selected_purpose %}
+    <input type="hidden" name="purpose" value="{{ selected_purpose }}">
+  {% endif %}
+  <button type="submit">Search</button>
+</form>
+
+<!-- 🏘 PROPERTY GRID -->
+<div class="property-grid">
+  {% for prop in page_obj %}
+    <div class="property-card">
+      {% if prop.image %}
+        <img src="{{ prop.image.url }}" alt="{{ prop.title }}" class="property-img">
+      {% else %}
+        <img src="{% static 'images/default.jpg' %}" alt="No Image" class="property-img">
+      {% endif %}
+      <div class="card-body">
+        <h2><a href="{% url 'property_detail' prop.id %}">{{ prop.title }}</a></h2>
+        <p><strong>₹{{ prop.price }}</strong></p>
+        <p>{{ prop.location }}</p>
+        <p>
+          <span class="tag">{{ prop.get_purpose_display }}</span> |
+          <span class="tag">{{ prop.get_property_type_display }}</span>
+        </p>
+        <a
+          href="https://wa.me/917814048665?text={{ 'Hello, I am interested in this property:\nTitle: '|add:prop.title|add:'\nLocation: '|add:prop.location|add:'\nPrice: ₹'|add:prop.price|stringformat:'0.2f'|urlencode }}"
+          target="_blank"
+          class="whatsapp-btn"
+        >
+          🟢 Contact on WhatsApp
+        </a>
+      </div>
+    </div>
+  {% empty %}
+    <p>No properties found.</p>
+  {% endfor %}
+</div>
+
+<!-- 🔁 PAGINATION -->
+<div class="pagination">
+  {% if page_obj.has_previous %}
+    <a href="?{% if request.GET %}{{ request.GET.urlencode|safe }}&{% endif %}page={{ page_obj.previous_page_number }}">« Previous</a>
+  {% endif %}
+  <span class="current">
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+  </span>
+  {% if page_obj.has_next %}
+    <a href="?{% if request.GET %}{{ request.GET.urlencode|safe }}&{% endif %}page={{ page_obj.next_page_number }}">Next »</a>
+  {% endif %}
+</div>
+
+<!-- 📢 CTA SECTION -->
+<section class="cta-section">
+  <h2>Looking to list your property?</h2>
+  <p>Contact us now and get featured on Amritsar's most trusted property hub.</p>
+  <a href="https://wa.me/917814048665" target="_blank" class="btn-primary">📲 WhatsApp Us Now</a>
+</section>
+
+<!-- 🔹 ABOUT SECTION -->
+<section class="about-section">
+  <div class="about-container">
+    <div class="about-image">
+      <img src="{% static 'images/team.jpg' %}" alt="About Us">
+    </div>
+    <div class="about-content">
+      <h2>Our Mission</h2>
+      <p>
+        At Amritsar Property Hub, we strive to connect buyers and sellers in the real estate market effectively. 
+        Our mission is to provide exceptional service and expert advice for all property transactions.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- 🔻 Footer -->
+<footer class="site-footer">
+  <p>Copyright © 2025 <strong>Amritsar Property Hub</strong> – All Rights Reserved.</p>
+</footer>
+
+
+</body>
+</html>

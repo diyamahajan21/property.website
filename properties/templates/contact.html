@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Us - Amritsar Property Hub</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body class="contact-page">
+
+<!-- 🔹 Navbar (Optional) -->
+<nav class="navbar">
+  <div class="nav-left">
+    <img src="{% static 'images/logo.jpg' %}" class="logo-img" alt="Logo">
+    <span class="logo-text">Amritsar Property Hub</span>
+  </div>
+  <div class="nav-links">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'contact' %}">Contact</a>
+  </div>
+</nav>
+
+<!-- 🔹 Contact Content -->
+<div class="contact-details">
+  <h1>📍 Our Office</h1>
+  <p><strong>🏢 Address:</strong> Shop No.2, Kesari Bagh, Old Improvement Trust Office, Amritsar</p>
+
+  <h1>📞 Call Us</h1>
+  <p><strong>📱 Bhupesh Mahajan:</strong> <a href="tel:+917888753004">+91-7888753004</a></p>
+  <p><strong>📱 Ujjwal Mahajan:</strong> <a href="tel:+917814048665">+91-7814048665</a></p>
+
+  <h1>📲 Follow Us</h1>
+  <p><strong>📷 Instagram:</strong> <a href="https://www.instagram.com/amritsarpropertyhub_1" target="_blank">@amritsarpropertyhub_1</a></p>
+  <p><strong>📘 Facebook:</strong> <a href="https://www.facebook.com/AmritsarPropertyHub" target="_blank">Amritsar Property Hub</a></p>
+
+  <div class="map-embed">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3424.523712462122!2d74.8726!3d31.6340!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3919644b0889b2cb%3A0xe94d74c8146f04f7!2sKesari%20Bagh%2C%20Amritsar!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin"
+      width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy">
+    </iframe>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page_title }} | Amritsar Property Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore {{ page_title }} on Amritsar Property Hub. View listings with price, location, and property type.">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="icon" href="{% static 'images/logo.jpg' %}">
+</head>
+<body>
+
+<!-- 🔹 Navbar -->
+<nav class="navbar">
+  <div class="nav-left">
+    <img src="{% static 'images/logo.jpg' %}" class="logo-img" alt="Logo">
+    <span class="logo-text">Amritsar Property Hub</span>
+  </div>
+  <div class="nav-links">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'contact' %}">Contact</a>
+  </div>
+</nav>
+
+<!-- 🔹 Page Title -->
+<section class="hero">
+  <h1>{{ page_title }}</h1>
+</section>
+
+<!-- 🔹 Property Grid -->
+<div class="property-grid">
+  {% for prop in properties %}
+    <div class="property-card">
+   {% if prop.image %}
+  <img src="{{ prop.image.url }}" alt="{{ prop.title }}" class="property-img">
+  {% else %}
+  <img src="{% static 'images/default.jpg' %}" alt="No image" class="property-img">
+  {% endif %}
+      
+      <div class="card-body">
+        <h2><a href="{% url 'property_detail' prop.id %}">{{ prop.title }}</a></h2>
+        <p><strong>₹{{ prop.price }}</strong></p>
+        <p>{{ prop.location }}</p>
+        <p><span class="tag">{{ prop.get_property_type_display }}</span></p>
+
+        <!-- WhatsApp Contact Button (optional) -->
+        <a
+          href="https://wa.me/917814048665?text={{ 'I am interested in the property:\nTitle: '|add:prop.title|add:'\nLocation: '|add:prop.location|add:'\nPrice: ₹'|add:prop.price|stringformat:'0.2f'|urlencode }}"
+          target="_blank"
+          class="whatsapp-btn"
+        >
+          🟢 Contact on WhatsApp
+        </a>
+      </div>
+    </div>
+  {% empty %}
+    <p>No properties found.</p>
+  {% endfor %}
+</div>
+
+</body>
+</html>
